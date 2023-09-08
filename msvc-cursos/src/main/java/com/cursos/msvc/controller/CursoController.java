@@ -1,6 +1,6 @@
 package com.cursos.msvc.controller;
 
-import com.cursos.msvc.entity.Curso;
+import com.cursos.msvc.models.entity.Curso;
 import com.cursos.msvc.services.CursoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class CursoController {

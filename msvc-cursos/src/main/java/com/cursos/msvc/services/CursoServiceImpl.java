@@ -1,6 +1,7 @@
 package com.cursos.msvc.services;
 
-import com.cursos.msvc.entity.Curso;
+import com.cursos.msvc.models.UsuarioPojo;
+import com.cursos.msvc.models.entity.Curso;
 import com.cursos.msvc.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,20 @@ public class CursoServiceImpl implements CursoService{
     @Transactional
     public void eliminar(Long id) {
         cursoRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<UsuarioPojo> asignarUsuario(UsuarioPojo usuarioPojo, Long curso_id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<UsuarioPojo> crearUsuario(UsuarioPojo usuarioPojo, Long curso_id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<UsuarioPojo> eliminarUsuarioCurso(UsuarioPojo usuarioPojo, Long curso_id) {
+        return Optional.empty();
     }
 }
