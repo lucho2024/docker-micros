@@ -1,0 +1,27 @@
+2023-12-07T03:28:45.629Z  INFO 1 --- [main] c.c.ms.usuarios.MsvcUsuariosApplication  : Starting MsvcUsuariosApplication v0.0.1-SNAPSHOT using Java 17-ea with PID 1 (/app/msvc-usuarios-0.0.1-SNAPSHOT.jar started by root in /app)
+2023-12-07T03:28:45.632Z DEBUG 1 --- [main] c.c.ms.usuarios.MsvcUsuariosApplication  : Running with Spring Boot v3.1.2, Spring v6.0.11
+2023-12-07T03:28:45.633Z  INFO 1 --- [main] c.c.ms.usuarios.MsvcUsuariosApplication  : No active profile set, falling back to 1 default profile: "default"
+2023-12-07T03:28:46.459Z  INFO 1 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-07T03:28:46.502Z  INFO 1 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 36 ms. Found 1 JPA repository interfaces.
+2023-12-07T03:28:46.716Z  INFO 1 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=0a06703f-e31d-3331-916d-4261e11cc5fd
+2023-12-07T03:28:46.769Z  INFO 1 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'com.cursos.ms.usuarios.clients.CursoClient' of type [org.springframework.cloud.openfeign.FeignClientFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-12-07T03:28:47.091Z  INFO 1 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8001 (http)
+2023-12-07T03:28:47.099Z  INFO 1 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-12-07T03:28:47.100Z  INFO 1 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-12-07T03:28:47.163Z  INFO 1 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-12-07T03:28:47.164Z  INFO 1 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1474 ms
+2023-12-07T03:28:47.294Z  INFO 1 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-12-07T03:28:47.661Z  INFO 1 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@408613cc
+2023-12-07T03:28:47.663Z  INFO 1 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-12-07T03:28:47.693Z  INFO 1 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-07T03:28:47.733Z  INFO 1 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
+2023-12-07T03:28:47.735Z  INFO 1 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-12-07T03:28:47.875Z  INFO 1 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-12-07T03:28:48.030Z  INFO 1 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-12-07T03:28:48.248Z  INFO 1 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-12-07T03:28:48.718Z  INFO 1 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-12-07T03:28:48.783Z  INFO 1 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-07T03:28:49.080Z  INFO 1 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-12-07T03:28:49.406Z  WARN 1 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-07T03:28:49.815Z  INFO 1 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8001 (http) with context path ''
+2023-12-07T03:28:49.825Z  INFO 1 --- [main] c.c.ms.usuarios.MsvcUsuariosApplication  : Started MsvcUsuariosApplication in 4.636 seconds (process running for 5.087)

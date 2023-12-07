@@ -1,0 +1,66 @@
+mvn clean package -DskipTests
+
+docker build .   // construir la imagen en la ruta que deseemos en este caso . es la raiz
+
+ENTRYPOINT ["java","-jar","msvc-usuarios-0.0.1-SNAPSHOT.jar"]  esto se ejecuta cuando hacemos docker run y no docker build
+
+docker images // para ver la imagenes
+
+docker ps // para ver los contenedores que estan corriendo
+
+docker run -d -p 8001:8001 1becc6477fae  // el primer puerto es el puerto que se expone y el segundo es el de la app,-d es para separar la terminal del contenedor
+
+docker stop peaceful_mestorf  // detener contendor
+
+docker build -t usuario .  // el -t le da un nombre
+
+docker build -t usuarios . -f .\msvc-usuarios\Dockerfile  con -f le indicamos donde esta el docker file	
+
+Docker proporciona un solo comando que eliminará cualquier recurso (imágenes, contenedores, volúmenes y redes) que estén pendientes (no asociados con un contenedor):
+
+docker system prune
+
+Para eliminar adicionalmente los contenedores detenidos y todas las imágenes no utilizadas (no solo aquellas pendientes), añada el indicador -a al comando:
+
+docker system prune -a
+
+docker stop 1becc6477fae  detener un contenedor
+
+docker start  1becc6477fae levantar un contenedor
+docker start -a  1becc6477fae levantar un contenedor pero de formar attatch con la terminal
+
+docker attatch 1becc6477fae  para adjuntar el contenedor con la terminar y ver logs
+
+docker logs 1becc6477fae para ver los logs del contenedor levantado
+
+
+docker rm 1becc6477fae para eliminar un contenedor , no una imagen
+
+docker container prune eliminar todos los conteneddores que estan dentenidos
+
+docker rmi usuarios  para eliminar una imagen
+
+docker image prune elimina todas las imagenes que estan stopped
+
+docker run -d -p 8001:8001 1becc6477fae --rm cuando el contenedor pare se va eliminar automaticamente
+
+docker run -p 8001:8001 --rm -it 84abc9e3e208 /bin/sh  modo interactivo y entrar a la consola del contenedor
+
+
+docker run --rm -it usuarios /bin/sh
+
+ docker cp .\Login.java 4c28b548fa9f/:app/Login.java    copiar del pc al contenedor
+ 
+ docker cp 4c28b548fa9f/:app/Login.java .\Login2.java  copiar del contenedor a nuestra maquina
+ 
+ docker run -p 8001:8001 --rm -d usuarios
+ 
+ docker cp 627c68193308:/app/logs .\logs  copiar logs del contenedor al pc
+ 
+ docker image inspect usuarios  inspeccionar una imagen
+ 
+ docker container inspect 627c68193308  inspeccionar un contenedor
+ 
+ docker build -t usuarios:v2 . -f .\msvc-usuarios\Dockerfile darle una version a la imagen
+ 
+ docker run -p 8001:8001 --rm -d --name msvc-usuarios  usuarios:v2  darle un nombre al contenedor

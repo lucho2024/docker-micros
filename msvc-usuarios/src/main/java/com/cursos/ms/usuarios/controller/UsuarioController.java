@@ -20,9 +20,17 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
+    private static ResponseEntity<Map<String, String>> validar(BindingResult bindingResult) {
+        Map<String, String> errors = new HashMap<>();
+        bindingResult.getFieldErrors().forEach(e -> {
+            errors.put(e.getField(), "El Campo " + e.getField() + e.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errors);
+    }
+
     @GetMapping("/")
-    public List<Usuario> listar() {
-        return usuarioService.listar();
+    public Map<String,List<Usuario>> listar() {
+        return Collections.singletonMap("usuarios",usuarioService.listar());
     }
 
     @GetMapping("/{id}")
@@ -32,48 +40,39 @@ public class UsuarioController {
             return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
         }
 
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con id " + id +
-                "no fue encontrado");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con id " + id + "no fue encontrado");
     }
-
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> crear(@Valid @RequestBody Usuario usuario, BindingResult bindingResult) {
 
 
-        
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return validar(bindingResult);
         }
 
-        if(!usuario.getEmail().isEmpty() && usuarioService.existePorEmail(usuario.getEmail())){
-            return ResponseEntity
-                    .badRequest()
-                    .body(Collections.singletonMap("Mensaje","Ya existe este email en la base de datos"));
+        if (!usuario.getEmail().isEmpty() && usuarioService.existePorEmail(usuario.getEmail())) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("Mensaje", "Ya existe este email en la base de datos"));
         }
-        
+
         return ResponseEntity.ok().body(usuarioService.guardar(usuario));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> editar(@Valid @RequestBody Usuario usuario,BindingResult bindingResult, @PathVariable Long id) {
+    public ResponseEntity<?> editar(@Valid @RequestBody Usuario usuario, BindingResult bindingResult, @PathVariable Long id) {
 
 
-
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return validar(bindingResult);
         }
-        
+
         Optional<Usuario> usuarioOptional = usuarioService.porId(id);
 
         if (!usuario.getEmail().isEmpty() && usuarioOptional.isPresent()) {
             Usuario usuariDb = usuarioOptional.get();
-            if(!usuario.getEmail().equalsIgnoreCase(usuariDb.getEmail())
-                    && usuarioService.porEmail(usuario.getEmail()).isPresent()){
-                return ResponseEntity
-                        .badRequest()
-                        .body(Collections.singletonMap("Mensaje","Ya existe este email en la base de datos"));
+            if (!usuario.getEmail().equalsIgnoreCase(usuariDb.getEmail()) && usuarioService.porEmail(usuario.getEmail()).isPresent()) {
+                return ResponseEntity.badRequest().body(Collections.singletonMap("Mensaje", "Ya existe este email en la base de datos"));
             }
             usuariDb.setNombre(usuario.getNombre());
             usuariDb.setEmail(usuario.getEmail());
@@ -81,34 +80,29 @@ public class UsuarioController {
             return new ResponseEntity<>(usuarioService.guardar(usuariDb), HttpStatus.CREATED);
         }
 
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con id " + id +
-                "no fue encontrado");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con id " + id + "no fue encontrado");
 
     }
 
-
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id){
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
 
-        Optional<Usuario>usuarioOptional = usuarioService.porId(id);
+        Optional<Usuario> usuarioOptional = usuarioService.porId(id);
 
-        if(usuarioOptional.isPresent()){
+        if (usuarioOptional.isPresent()) {
             usuarioService.eliminar(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
 
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con id " + id +
-                "no fue encontrado");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario con id " + id + "no fue encontrado");
     }
 
-    private static ResponseEntity<Map<String, String>> validar(BindingResult bindingResult) {
-        Map<String,String> errors = new HashMap<>();
-        bindingResult.getFieldErrors().forEach(e ->{
-            errors.put(e.getField(),"El Campo "+e.getField()+ e.getDefaultMessage());
-        } );
-        return ResponseEntity.badRequest().body(errors);
+    @GetMapping("/usuarios-por-curso")
+    public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam List<Long> ids) {
+
+        return ResponseEntity.ok(usuarioService.listarPorIds(ids));
     }
+
 
 }

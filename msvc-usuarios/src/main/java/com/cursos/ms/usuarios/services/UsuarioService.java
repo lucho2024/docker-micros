@@ -19,5 +19,7 @@ public interface UsuarioService {
 
     boolean existePorEmail(String email);
 
+    List<Usuario> listarPorIds(Iterable<Long> ids);
+
 
 }

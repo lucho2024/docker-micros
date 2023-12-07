@@ -1,5 +1,6 @@
 package com.cursos.ms.usuarios.services;
 
+import com.cursos.ms.usuarios.clients.CursoClient;
 import com.cursos.ms.usuarios.models.entities.Usuario;
 import com.cursos.ms.usuarios.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private CursoClient cursoClient;
 
 
     @Override
@@ -38,6 +42,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public void eliminar(Long id) {
         usuarioRepository.deleteById(id);
+        cursoClient.eliminarCursoUsuarioPorId(id);
     }
 
     @Override
@@ -48,5 +53,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public boolean existePorEmail(String email) {
         return usuarioRepository.existsByEmail(email);
+    }
+
+    @Override
+    public List<Usuario> listarPorIds(Iterable<Long> ids) {
+        return usuarioRepository.findAllById(ids);
     }
 }

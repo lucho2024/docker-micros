@@ -21,6 +21,10 @@ public interface CursoService {
 
     Optional<UsuarioPojo> eliminarUsuarioCurso(UsuarioPojo usuarioPojo,Long curso_id);
 
+    Optional<Curso> porIdConUsuarios(Long id);
+
+    void eliminarCursoUsuarioPorId(Long  id);
+
 
 
 }
