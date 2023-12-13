@@ -1,5 +1,4 @@
-ARG MSVC_NAME=msvc-usuarios
-
+ARG MSVC_NAME=msvc-cursos
 FROM openjdk:17-jdk-alpine as builder
 ARG MSVC_NAME
 WORKDIR /app/$MSVC_NAME
@@ -20,11 +19,8 @@ ARG MSVC_NAME
 WORKDIR /app
 RUN mkdir ./logs
 
-COPY --from=builder /app/$MSVC_NAME/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
-ENV PORT 8001
-EXPOSE $PORT
+COPY --from=builder /app/$MSVC_NAME/target/msvc-cursos-0.0.1-SNAPSHOT.jar .
+EXPOSE 8002
 
-#ENTRYPOINT ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
-CMD ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
-
-
+#ENTRYPOINT ["java", "-jar", "msvc-cursos-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "msvc-cursos-0.0.1-SNAPSHOT.jar"]

@@ -49,18 +49,47 @@ docker run -p 8001:8001 --rm -it 84abc9e3e208 /bin/sh  modo interactivo y entrar
 
 docker run --rm -it usuarios /bin/sh
 
- docker cp .\Login.java 4c28b548fa9f/:app/Login.java    copiar del pc al contenedor
+docker cp .\Login.java 4c28b548fa9f/:app/Login.java    copiar del pc al contenedor
  
- docker cp 4c28b548fa9f/:app/Login.java .\Login2.java  copiar del contenedor a nuestra maquina
+docker cp 4c28b548fa9f/:app/Login.java .\Login2.java  copiar del contenedor a nuestra maquina
  
- docker run -p 8001:8001 --rm -d usuarios
+docker run -p 8001:8001 --rm -d usuarios
  
- docker cp 627c68193308:/app/logs .\logs  copiar logs del contenedor al pc
+docker cp 627c68193308:/app/logs .\logs  copiar logs del contenedor al pc
  
- docker image inspect usuarios  inspeccionar una imagen
+docker image inspect usuarios  inspeccionar una imagen
  
- docker container inspect 627c68193308  inspeccionar un contenedor
+docker container inspect 627c68193308  inspeccionar un contenedor
  
- docker build -t usuarios:v2 . -f .\msvc-usuarios\Dockerfile darle una version a la imagen
+docker build -t usuarios:v2 . -f .\msvc-usuarios\Dockerfile darle una version a la imagen
  
- docker run -p 8001:8001 --rm -d --name msvc-usuarios  usuarios:v2  darle un nombre al contenedor
+docker run -p 8001:8001 --rm -d --name msvc-usuarios  usuarios:v2  darle un nombre al contenedor
+ 
+ 
+ ********************* comunicaciones y redes
+ 
+docker network create spring  crear una red 
+ 
+docker network ls   listar las redes
+ 
+docker run -p8001:8001 -d --rm --name msvc-usuarios --network spring usuarios  crear un contenedor con la red llamada spring 
+ 
+ 
+docker pull mysql:8 descargar mysql
+ 
+ 
+docker run -d -p 3307:3306 --name baseDatosMysql --network spring -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=msvc_usuarios mysql   crear contenedor con imagen de mysql
+
+-e indica que es una variable de ambiente enviroment
+ 
+docker exec -it baseDatosMysql bash  acceder al bash de un contenedor -it terminar interactivo
+ 
+mysql -h localhost -u root -p conectar la base de datos en el contenedor
+  
+docker run -d -p 3307:3306 --name baseDatosMysql --network spring -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=msvc-usuarios -v data-mysql:/var/lib/mysql mysql 
+crear un volumen para que los datos de la base de datos puede persistir si el contenedor se eliminar
+
+
+docker run -p 8001:8001 -env PORT=8090 -d --rm --name msvc-usuarios --network spring usuarios  #AGREGAR VARIABLE DE ENTORONO AL CONTENEDOR Y CAMBIAR EL PUERTO
+
+docker run -p 8001:8001 --env-file .\msvc-usuarios\.env -d --rm --name msvc-usuarios --network spring usuarios
