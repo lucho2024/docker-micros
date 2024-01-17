@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "msvc-usuarios", url = "${msvc.cursos.url}")
+@FeignClient(name = "msvc-usuarios", url = "${msvc.usuarios.url}")
 public interface UsuarioClient {
 
 

@@ -93,3 +93,14 @@ crear un volumen para que los datos de la base de datos puede persistir si el co
 docker run -p 8001:8001 -env PORT=8090 -d --rm --name msvc-usuarios --network spring usuarios  #AGREGAR VARIABLE DE ENTORONO AL CONTENEDOR Y CAMBIAR EL PUERTO
 
 docker run -p 8001:8001 --env-file .\msvc-usuarios\.env -d --rm --name msvc-usuarios --network spring usuarios
+
+
+***************************
+Docker commpose
+docker-compose up -d
+
+docker-compose down -v  baja todos los contenedores y los volumenes
+
+docker-compose up --build -d construir las imagenes y luego crear el contenedor
+
+docker tag docker-micros-msvc-curso  crear una copia de una imagen existente

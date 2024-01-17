@@ -1,0 +1,1 @@
+create database msvc_cursos;
