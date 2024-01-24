@@ -21,28 +21,6 @@ services:
     depends_on:
       - baseDatosMysql
     restart: always
-  msvc-cursos:
-    container_name: msvc-cursos
-    image: lucho2024/docker-micros-msvc-cursos
-#    build:
-#      context: ./
-#      dockerfile: ./msvc-cursos/Dockerfile
-    ports:
-      - "8002:8002"
-    #env_file: ./msvc-cursos/.env
-    environment:
-      PORT: 8002
-      DB_HOST: baseDatosMysql:3306
-      DB_DATABASE: msvc_cursos
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      USUARIOS_URL: msvc-usuarios:8001
-    networks:
-      - spring
-    depends_on:
-      - baseDatosMysql
-      - msvc-usuarios
-    restart: always
   baseDatosMysql:
     container_name: baseDatosMysql
     image: mysql:8
