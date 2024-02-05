@@ -4,6 +4,8 @@ import com.cursos.ms.usuarios.models.entities.Usuario;
 import com.cursos.ms.usuarios.services.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,14 @@ public class UsuarioController {
 
     @Autowired
     UsuarioService usuarioService;
+
+    @Autowired
+    private ApplicationContext context;
+
+    @GetMapping("/crash")
+    public void crash(){
+        ((ConfigurableApplicationContext)context).close();
+    }
 
     private static ResponseEntity<Map<String, String>> validar(BindingResult bindingResult) {
         Map<String, String> errors = new HashMap<>();

@@ -131,6 +131,10 @@ docker-compose up --build -d
 
 # crear una copia de una imagen existente
 docker tag docker-micros-msvc-curso  
+docker tag usuarios lucho2024/docker-micros-msvc-usuarios
+
+# subir a docker hub
+docker push lucho2024/docker-micros-msvc-cursos
 
 
 /*****Conectar instancia AWS
@@ -207,3 +211,81 @@ sudo service docker start
 
 sudo docker-compose up -d
 
+*************************************
+# KUBERNETES
+
+# Saliendo por un error HOST_VIRT_UNAVAILABLE: Failed to start host: creating host: create: precreate: This computer doesn't have VT-X/AMD-v enabled. Enabling it in the BIOS is mandatory
+minikube start --driver=virtualbox --no-vtx-check
+
+# To turn off this warning run:                  
+minikube config set WantVirtualBoxDriverWarning false
+
+# mirar el status de minikube 
+minikube status
+
+# detener minibuke
+minikube stop
+
+# mirar los comandos que existen en kubectl
+kubectl help
+
+# creando un deployment y pod con el comando create de forma imperativa
+kubectl create deployment baseDatosMysql --image=mysql:8 --port=3306
+
+# Obtener los deployments  o pdos
+kubectl get deployments
+kubectl get pods
+
+
+# describir un pod- es como un inspect en docker
+kubectl describe pods mysql8-64c974549b-g5cpv
+
+# ver logs de un pod
+kubectl logs mysql8-7cf4d5cf69-n7bxk
+
+
+# eliminar un deployment
+kubectl delete deployment mysql8
+
+# crear un archivo de configuracion de un deployment
+kubectl create deployment mysql8 --image=mysql:8 --port=3306 --dry-run=client -o yaml > deployment-mysql.yaml
+
+# crear el deployment de acuerdo a un archivo de configuracion
+kubectl apply -f .\deployment-mysql.yaml
+
+# creqr un servicio para la comunicacion interna con clusterIp
+kubectl expose deployment mysql8 --port=3306 --type=ClusterIP
+
+# exponer un servicio para la comunicacion con LoadBalancer
+kubectl expose deployment msvc-usuarios --port=8001 --type=LoadBalancer
+
+
+# obterner los servicios
+kubectl get services
+
+
+# describir un servicio
+kubectl describe service mysql8
+
+# crear deployment de nuestro micro con la imagen
+kubectl create deployment msvc-usuarios --image=lucho2024/docker-micros-msvc-cursos:latest --port=8001
+
+# Actualizar imagen docker de un pod y deployment
+kubectl set image deployment msvc-usuarios docker-micros-msvc-usuarios=lucho2024/docker-micros-msvc-usuarios:2
+
+# crear replicar
+kubectl scale deployment msvc-usuarios --replicas=3
+
+# guardar yaml en un archivo
+kubectl get service mysql8 -o yaml > svc-mysql.yml
+kubectl get service mysql8 -o yaml > msvc-mysql.yml
+kubectl get service msvc-usuarios -o yaml > svc.usuarios.yaml
+
+# con el --dry-run=client no crea el cluster solo crea el archivo yaml
+kubectl create deployment msvc-usuarios --port=8001 --image=lucho2024/docker-micros-msvc-usuarios:latest --dry-run=client -o yaml > deployment-usuarios.yaml
+
+# eliminar deployment por medio de un archivo
+kubectl delete -f .\deployment-mysql.yaml
+
+# saber la ruta del servicio
+minikube service msvc-usuarios

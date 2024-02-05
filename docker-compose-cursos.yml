@@ -11,7 +11,7 @@ services:
     #env_file: ./msvc-cursos/.env
     environment:
       PORT: 8002
-      DB_HOST: baseDatosMysql:3306
+      DB_HOST: mysql8:3306
       DB_DATABASE: msvc_cursos
       DB_USERNAME: root
       DB_PASSWORD: root
@@ -19,10 +19,10 @@ services:
     networks:
       - spring
     depends_on:
-      - baseDatosMysql
+      - mysql8
     restart: always
-  baseDatosMysql:
-    container_name: baseDatosMysql
+  mysql8:
+    container_name: mysql8
     image: mysql:8
     ports:
       - "3307:3306"
