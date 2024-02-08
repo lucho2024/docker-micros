@@ -289,3 +289,7 @@ kubectl delete -f .\deployment-mysql.yaml
 
 # saber la ruta del servicio
 minikube service msvc-usuarios
+
+
+#Obtener la clase de almacenamiento de minikube
+kubectl get sc
