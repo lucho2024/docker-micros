@@ -11,6 +11,8 @@ docker images
 
 # para ver los contenedores que estan corriendo
 docker ps  
+# Ver todos los contenedor asi esten apagados
+docker ps -a
 
 # el primer puerto es el puerto que se expone y el segundo es el de la app,-d es para separar la terminal del contenedor
 docker run -d -p 8001:8001 1becc6477fae   
@@ -99,6 +101,7 @@ docker run -p8001:8001 -d --rm --name msvc-usuarios --network spring usuarios
 
 # descargar mysql
 docker pull mysql:8 
+
 
 # crear contenedor con imagen de mysql
 docker run -d -p 3307:3306 --name baseDatosMysql --network spring -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=msvc_usuarios mysql   
@@ -293,3 +296,7 @@ minikube service msvc-usuarios
 
 #Obtener la clase de almacenamiento de minikube
 kubectl get sc
+
+# comando para dar permisos y que pueda encontar los microsservicos con spring cloud
+
+kubectl create cluesterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default

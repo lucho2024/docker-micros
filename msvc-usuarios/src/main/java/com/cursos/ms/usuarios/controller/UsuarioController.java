@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,9 @@ public class UsuarioController {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
+    private Environment environment;
+
     @GetMapping("/crash")
     public void crash(){
         ((ConfigurableApplicationContext)context).close();
@@ -39,8 +43,14 @@ public class UsuarioController {
     }
 
     @GetMapping("/")
-    public Map<String,List<Usuario>> listar() {
-        return Collections.singletonMap("usuarios",usuarioService.listar());
+    public Map<String,Object> listar() {
+        Map<String,Object> body = new HashMap<>();
+        body.put("usuarios",usuarioService.listar());
+        body.put("podinfo",environment.getProperty("MY_POD_NAME")+": "+environment.getProperty("MY_POD_IP"));
+        body.put("texto",environment.getProperty("config.texto"));
+
+
+        return  body;
     }
 
     @GetMapping("/{id}")
